@@ -9,9 +9,13 @@ main.bc: main.ll
 compile: main.bc
 
 app-x64.bc: compile
-	${cc} -emit-llvm -c ${?} -o build/x64/${@}
+	${cc} -emit-llvm -c ${wildcard build/IR/*.bc} -o build/x64/${@}
 
 build: app-x64.bc
+	${cc} build/x64/${?} -o build/x64/app-x64
+
+run: build
+	./build/x64/app-x64
 
 clean:
 	rm -rf ${wildcard build/IR/*}
