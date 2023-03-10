@@ -29,23 +29,23 @@ X64 := build/x64
 X86 := build/x86
 
 main.ll: main.cc
-	@ ${CC} ${FLAGS} -emit-llvm -S ${?} -o ${IR}/${@}
+	${CC} ${FLAGS} -emit-llvm -S ${?} -o ${IR}/${@}
 
 main.bc: main.ll
-	@ ${CC} ${FLAGS} -emit-llvm -c ${IR}/${?} -o ${IR}/${@}
+	${CC} ${FLAGS} -emit-llvm -c ${IR}/${?} -o ${IR}/${@}
 
 compile: main.bc
 
 app.bc: compile
-	@ ${CC} ${FLAGS} -emit-llvm -c ${wildcard ${IR}/*.bc} -o ${X64}/${@}
+	${CC} ${FLAGS} -emit-llvm -c ${wildcard ${IR}/*.bc} -o ${X64}/${@}
 
 build: app.bc
-	@ ${CC} ${FLAGS} ${LIB} ${X64}/${?} -o ${X64}/app.exe
+	${CC} ${FLAGS} ${LIB} ${X64}/${?} -o ${X64}/app.exe
 
 run: build
-	@ ./${X64}/app.exe
+	./${X64}/app.exe
 
 clean:
-	@ rm -rf ${wildcard build/IR/*}
-	@ rm -rf ${wildcard build/x64/*}
-	@ rm -rf ${wildcard build/x86/*}
+	rm -rf ${wildcard build/IR/*}
+	rm -rf ${wildcard build/x64/*}
+	rm -rf ${wildcard build/x86/*}
