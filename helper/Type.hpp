@@ -44,6 +44,6 @@ typedef u64 usize;
 typedef u8 byte;
 
 /* C-Style String */
-typedef char* str;
+// typedef char* str;
 
 } /* namespace Type */
