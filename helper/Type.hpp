@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 namespace Type {
 
 /* 8-bit Signed Integer Type */
@@ -42,6 +44,9 @@ typedef u64 usize;
 
 /* 8-bit Unsigned Integer Type */
 typedef u8 byte;
+
+/* String Class */
+typedef std::string str;
 
 /* C-Style String */
 // typedef char* str;
