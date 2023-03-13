@@ -43,7 +43,7 @@ build: app.bc
 	${CC} ${FLAGS} ${LIB} ${X64}/${?} -o ${X64}/app.exe
 
 run: build
-	./${X64}/app.exe
+	clear && ./${X64}/app.exe
 
 clean:
 	rm -rf ${wildcard build/IR/*}
