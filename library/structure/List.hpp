@@ -116,16 +116,16 @@ void InsertByIndex(List *senarai, char data, int index) {
         helper->next = node;
     }
     // jika kondisi if di atas tidak terpenuhi atau dengan kata lain
-    // kondisi simpul head itu kosong atau nilai index kurang dari 1
+    // kondisi simpul head itu kosong atau nilai index kurang dari sama dengan 1
     else {
         // menyisipkan simpul baru ke dalam senarai
         node->next = senarai->head;
         // memperbarui simpul head senarai
         senarai->head = node;
         // memperbarui simpul tail senarai
-        // - alternatif 1 untuk memperbarui simpul head senarai
+        // - alternatif 1 untuk memperbarui simpul tail senarai
         senarai->tail = (node->next) ? senarai->tail : node;
-        // - alternatif 2 untuk memperbarui simpul head senarai
+        // - alternatif 2 untuk memperbarui simpul tail senarai
         if (node->next == NULL) {
             senarai->tail = node;
         }
@@ -237,7 +237,7 @@ void DeleteByIndex(List *senarai, int index) {
     }
     // jika kondisi if di atas tidak terpenuhi atau dengan kata lain
     // kondisi senarai hanya mempunyai satu simpul saja atau 
-    // nilai index kurang dari 1
+    // nilai index kurang dari atau sama dengan 1
     else {
         // memperbarui simpul head dan simpul tail senarai
         // - alternatif 1 untuk memperbarui simpul head dan tail senarai
