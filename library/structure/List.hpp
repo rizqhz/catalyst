@@ -2,26 +2,37 @@
 
 #include <iostream>
 
+using std::cout;
+using std::endl;
+
 template <typename T>
-struct Node {
+class Node {
+private:
     T value;
-    Node<T> *next;
-    Node<T> *prev;
+public:
+    Node<T> *next, *prev;
     Node(T&& value);
+    const T Get();
 };
 
 template <typename T>
 inline Node<T>::Node(T&& value) {
     Node<T>::value = value;
-    Node<T>::next = nullptr;
-    Node<T>::prev = nullptr;
+    next = prev = nullptr;
 }
 
 template <typename T>
-struct List {
-    Node<T> *head;
-    Node<T> *tail;
+inline const T Node<T>::Get() {
+    return value;
+}
+
+template <typename T>
+class List {
+private:
+    Node<T> *head, *tail;
+public:
     List();
+   ~List();
     void Inspect();
     void InsertFirst(T&& value);
     void InsertLast(T&& value);
@@ -30,18 +41,20 @@ struct List {
 
 template <typename T>
 inline List<T>::List() {
-    List<T>::head = nullptr;
-    List<T>::tail = nullptr;
+    head = tail = nullptr;
 }
 
 template <typename T>
-void List<T>::Inspect() {
+inline List<T>::~List() {}
+
+template <typename T>
+inline void List<T>::Inspect() {
     Node<T> *helper = List<T>::head;
     while (helper != nullptr) {
-        std::cout << helper->value << " ";
+        cout << helper->Get() << " ";
         helper = helper->next;
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
 template <typename T>
@@ -84,6 +97,9 @@ void List<T>::Insert(T&& value, int&& index) {
     //     node->next = helper->next;
     //     helper->next = node;
     } else {
+        node->next = head;
+        head->prev = node;
+        head = node;
     //     node->next = senarai->head;
     //     senarai->head = node;
     //     senarai->tail = (node->next) ? senarai->tail : node;
