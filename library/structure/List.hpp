@@ -33,10 +33,14 @@ private:
 public:
     List();
    ~List();
+    void Iterate();
     void Inspect();
     void InsertFirst(T&& value);
+    void DeleteFirst();
     void InsertLast(T&& value);
+    void DeleteLast();
     void Insert(T&& value, int&& index);
+    void Delete(int&& index);
 };
 
 template <typename T>
@@ -48,13 +52,34 @@ template <typename T>
 inline List<T>::~List() {}
 
 template <typename T>
-inline void List<T>::Inspect() {
+inline void List<T>::Iterate() {
     Node<T> *helper = List<T>::head;
+    cout << "[";
     while (helper != nullptr) {
         cout << helper->Get() << " ";
         helper = helper->next;
     }
-    cout << endl;
+    cout << '\b' << "]" << endl;
+}
+
+template <typename T>
+inline void List<T>::Inspect() {
+    cout << "node: ";
+    List<T>::Iterate();
+    cout << "head: addr(" << head << ") - val(";
+    if (head != nullptr) {
+        cout << head->Get();
+    } else {
+        cout << "null";
+    }
+    cout << ")" << endl;
+    cout << "tail: addr(" << tail << ") - val(";
+    if (tail != nullptr) {
+        cout << tail->Get();
+    } else {
+        cout << "null";
+    }
+    cout << ")" << endl;
 }
 
 template <typename T>
