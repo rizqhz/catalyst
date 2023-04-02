@@ -7,11 +7,11 @@ struct Node {
     T value;
     Node<T> *next;
     Node<T> *prev;
-    Node(const T &value);
+    Node(T&& value);
 };
 
 template <typename T>
-inline Node<T>::Node(const T &value) {
+inline Node<T>::Node(T&& value) {
     Node<T>::value = value;
     Node<T>::next = nullptr;
     Node<T>::prev = nullptr;
@@ -22,8 +22,10 @@ struct List {
     Node<T> *head;
     Node<T> *tail;
     List();
-    void view();
-    void insertFirst(const T &value);
+    void Inspect();
+    void InsertFirst(T&& value);
+    void InsertLast(T&& value);
+    void Insert(T&& value, int&& index);
 };
 
 template <typename T>
@@ -33,7 +35,7 @@ inline List<T>::List() {
 }
 
 template <typename T>
-void List<T>::view() {
+void List<T>::Inspect() {
     Node<T> *helper = List<T>::head;
     while (helper != nullptr) {
         std::cout << helper->value << " ";
@@ -43,111 +45,53 @@ void List<T>::view() {
 }
 
 template <typename T>
-void List<T>::insertFirst(const T &value) {
-    Node<T> *node = new Node<T>(value);
+void List<T>::InsertFirst(T&& value) {
+    Node<T> *node = new Node<T>(std::move(value));
     if (head == nullptr) {
         head = tail = node;
+    } else {
+        node->next = head;
+        head->prev = node;
+        head = node;
     }
 }
 
-// template <typename T>
-// void InsertFirst(List *senarai, char data) {
-//     Node *node = new Node;
-//     node->data = data;
-//     if (senarai->head == NULL) {
-//         senarai->head = senarai->tail = node;
-//     } else {
-//         node->next = senarai->head;
-//         senarai->head = node;
-//     }
-// }
+template <typename T>
+void List<T>::InsertLast(T&& value) {
+    Node<T> *node = new Node<T>(std::move(value));
+    if (head == nullptr) {
+        head = tail = node;
+    } else {
+        tail->next = node;
+        node->prev = tail;
+        tail = node;
+    }
+}
 
-// /**
-//  *  @brief prosedur untuk menambahkan simpul di akhir senarai
-//  *  @param senarai List*
-//  *  @param data char
-//  */
-// void InsertLast(List *senarai, char data) {
-//     // membuat simpul baru yang akan disisipkan ke dalam senarai
-//     Node *node = new Node;
-//     // mengisikan data ke field informasi dari simpul baru
-//     node->data = data;
-//     // jika simpul head kosong/NULL maka dapat disimpulkan
-//     // senarai berantai tidak mempunyai simpul atau kosong
-//     if (senarai->head == NULL) {
-//         // menyisipkan simpul baru ke senarai melalui
-//         // simpul head dan simpul tail sehingga
-//         // simpul head dan tail saling berbagi resource yang sama
-//         senarai->head = senarai->tail = node;
-//     }
-//     // jika simpul head tidak kosong maka dapat disimpulkan
-//     // senarai mempunyai simpul atau tidak kosong
-//     else {
-//         // membuat simpul bantu untuk mencari simpul terakhir
-//         Node *helper = senarai->head;
-//         // melalukan perulangan untuk menelusuri senarai
-//         // untuk mencari simpul terakhir
-//         while (helper->next != NULL) {
-//             helper = helper->next;
-//         }
-//         // menyisipkan simpul baru ke dalam senarai melalui simpul terakhir
-//         helper->next = node;
-//         // memperbarui simpul tail senarai
-//         senarai->tail = node;
-//     }
-// }
-
-// /**
-//  *  @brief prosedur untuk menambahkan simpul ke dalam senarai berdasarkan index
-//  *  @param senarai List*
-//  *  @param data char
-//  *  @param index int
-//  */
-// void InsertByIndex(List *senarai, char data, int index) {
-//     // membuat simpul baru yang akan disisipkan ke dalam senarai
-//     Node *node = new Node;
-//     // mengisikan data ke field informasi dari simpul baru
-//     node->data = data;
-//     // jika simpul head tidak kosong dan nilai index lebih dari 1
-//     if (senarai->head != NULL and index > 1) {
-//         // membuat simpul bantu untuk mencari simpul dengan posisi index - 1
-//         // atau mencari simpul sebelum simpul dengan nilai index yang telah 
-//         // ditentukan
-//         Node *helper = senarai->head;
-//         // melalukan perulangan untuk menelusuri senarai
-//         // untuk mencari simpul dengan posisi index - 1
-//         while (helper->next != NULL and index > 2) {
-//             helper = helper->next;
-//             index = index - 1;
-//         }
-//         // memperbarui simpul tail senarai
-//         // - alternatif 1 untuk memperbarui simpul tail senarai
-//         senarai->tail = (helper->next) ? senarai->tail : node;
-//         // - alternatif 2 untuk memperbarui simpul tail senarai
-//         if (helper->next == NULL) {
-//             senarai->tail = node;
-//         }
-//         // mengubah sambungan simpul senarai
-//         node->next = helper->next;
-//         // menyisipkan simpul baru ke dalam senarai
-//         helper->next = node;
-//     }
-//     // jika kondisi if di atas tidak terpenuhi atau dengan kata lain
-//     // kondisi simpul head itu kosong atau nilai index kurang dari sama dengan 1
-//     else {
-//         // menyisipkan simpul baru ke dalam senarai
-//         node->next = senarai->head;
-//         // memperbarui simpul head senarai
-//         senarai->head = node;
-//         // memperbarui simpul tail senarai
-//         // - alternatif 1 untuk memperbarui simpul tail senarai
-//         senarai->tail = (node->next) ? senarai->tail : node;
-//         // - alternatif 2 untuk memperbarui simpul tail senarai
-//         if (node->next == NULL) {
-//             senarai->tail = node;
-//         }
-//     }
-// }
+template <typename T>
+void List<T>::Insert(T&& value, int&& index) {
+    Node<T> *node = new Node<T>(std::move(value));
+    if (head != nullptr and index > 1) {
+    //     Node *helper = senarai->head;
+    //     while (helper->next != NULL and index > 2) {
+    //         helper = helper->next;
+    //         index = index - 1;
+    //     }
+    //     senarai->tail = (helper->next) ? senarai->tail : node;
+    //     if (helper->next == NULL) {
+    //         senarai->tail = node;
+    //     }
+    //     node->next = helper->next;
+    //     helper->next = node;
+    } else {
+    //     node->next = senarai->head;
+    //     senarai->head = node;
+    //     senarai->tail = (node->next) ? senarai->tail : node;
+    //     if (node->next == NULL) {
+    //         senarai->tail = node;
+    //     }
+    }
+}
 
 // /**
 //  *  @brief prosedur untuk menghapus simpul pertama senarai
