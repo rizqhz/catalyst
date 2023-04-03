@@ -7,14 +7,14 @@ FLAGS := ${FLAGS} -Werror -Wall -Wextra -Weffc++
 FLAGS := ${FLAGS} -Wsign-conversion -pedantic-errors
 
 # pustaka yang ada di folder vendor
-LIB := ${LIB} -Lvendor/boost@v1.81.0
-LIB := ${LIB} -Lvendor/glad@v2.0.4
-LIB := ${LIB} -Lvendor/glfw@v3.3.8
-LIB := ${LIB} -Lvendor/glm@v0.9.9.8
-LIB := ${LIB} -Lvendor/imgui@v1.89.3
-LIB := ${LIB} -Lvendor/opencv@v4.7.0
-LIB := ${LIB} -Lvendor/protobuf@22.1
-LIB := ${LIB} -Lvendor/tensorflow@2.11.0
+LIB := ${LIB} -L vendor/boost@v1.81.0
+LIB := ${LIB} -L vendor/glad@v2.0.4
+LIB := ${LIB} -L vendor/glfw@v3.3.8
+LIB := ${LIB} -L vendor/glm@v0.9.9.8
+LIB := ${LIB} -L vendor/imgui@v1.89.3
+LIB := ${LIB} -L vendor/opencv@v4.7.0
+LIB := ${LIB} -L vendor/protobuf@22.1
+LIB := ${LIB} -L vendor/tensorflow@2.11.0
 
 # pustaka yang ada di sistem operasi windows
 LIB := ${LIB} -lkernel32
@@ -29,7 +29,7 @@ X64 := build/x64
 X86 := build/x86
 
 main.ll: main.cc
-	${CC} ${FLAGS} -emit-llvm -S ${?} -o ${IR}/${@}
+	${CC} ${FLAGS} -Ilibrary -Ihelper -emit-llvm -S ${?} -o ${IR}/${@}
 
 main.bc: main.ll
 	${CC} ${FLAGS} -emit-llvm -c ${IR}/${?} -o ${IR}/${@}
