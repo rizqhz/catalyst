@@ -21,6 +21,6 @@ public:
 
 }
 
-#include "impl/Node.impl"
+#include "impl/Node.impl.hpp"
 
 #endif
