@@ -1,38 +1,26 @@
 #ifndef __MODEL_NODE__
 #define __MODEL_NODE__
 
+#include <atomic>
+#include <memory>
+
 namespace Model {
 
 template <typename T>
 class Node {
 private:
-    T value;
+    std::atomic<T> data;
 public:
-    Node<T> *next;
-    Node<T> *prev;
+    std::unique_ptr<Node<T>> next;
+    std::unique_ptr<Node<T>> prev;
 public:
     Node(T &&value);
-    constexpr T& get() noexcept;
+    constexpr std::atomic<T>& get() noexcept;
     void update(T &&value);
 };
 
 }
 
-template <typename T>
-inline Model::Node<T>::Node(T &&value) {
-    this->value = value;
-    next = nullptr;
-    prev = nullptr;
-}
-
-template <typename T>
-constexpr T& Model::Node<T>::get() noexcept {
-    return value;
-}
-
-template <typename T>
-void Model::Node<T>::update(T &&value) {
-    this->value = value;
-}
+#include "impl/Node.impl"
 
 #endif
