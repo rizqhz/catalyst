@@ -14,7 +14,7 @@ constexpr std::atomic<T>& Model::Node<T>::get() noexcept {
 }
 
 template <typename T>
-inline void Model::Node<T>::update(T &&value) {
+void Model::Node<T>::update(T &&value) {
     data = value;
 }
 
