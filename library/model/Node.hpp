@@ -21,8 +21,8 @@ public:
 template <typename T>
 inline Model::Node<T>::Node(T &&value) {
     this->value = value;
-    this->next = nullptr;
-    this->prev = nullptr;
+    next = nullptr;
+    prev = nullptr;
 }
 
 template <typename T>
