@@ -11,8 +11,8 @@ class Node {
 private:
     std::atomic<T> data;
 public:
-    std::unique_ptr<Node<T>> next;
-    std::unique_ptr<Node<T>> prev;
+    std::shared_ptr<Node<T>> next;
+    std::shared_ptr<Node<T>> prev;
 public:
     Node(T &&value);
     constexpr std::atomic<T>& get() noexcept;
