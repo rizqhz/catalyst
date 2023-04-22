@@ -1,8 +1,6 @@
 #ifndef __ALGORITHM_SEARCH__
 #define __ALGORITHM_SEARCH__
 
-#include <iostream>
-
 namespace Algorithm {
 
 template <typename T>
