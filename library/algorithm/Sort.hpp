@@ -1,8 +1,6 @@
 #ifndef __ALGORITHM_SORT__
 #define __ALGORITHM_SORT__
 
-#include <iostream>
-
 namespace Algorithm {
 
 template <typename T>
@@ -12,6 +10,9 @@ public:
     static void Selection(T *data, int n);
     static void Insertion(T *data, int n);
 };
+
+template <typename T>
+void Swap(T &a, T &b);
 
 }
 
