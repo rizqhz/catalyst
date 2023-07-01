@@ -1,25 +1,25 @@
-name    := glad
-version := 2.0.4
+pkg.name    := glad
+pkg.version := 2.0.4
 
-package := ${name}@v${version}
-trace   := vendor/${package}
+glad.package := ${pkg.name}@v${pkg.version}
+glad.trace   := vendor/${glad.package}
 
 glad.check:
-	@echo ${package}
+	@echo ${glad.package}: ${glad.trace}
 
-glad.create.ll: ${trace}/include/glad.cc
-	@echo '[create] ${package}/glad.ll'
+glad.create.ll: ${glad.trace}/include/glad.cc
+	@echo '[create] ${glad.package}/glad.ll'
 	@${CC} ${FLAGS} -emit-llvm -S ${?} \
-		-o ${trace}/glad.ll
+		-o ${glad.trace}/glad.ll
 
 glad.create.bc: glad.create.ll
-	@echo '[create] ${package}/glad.bc'
-	@${CC} ${FLAGS} -emit-llvm -c ${trace}/glad.ll \
-		-o ${trace}/glad.bc
+	@echo '[create] ${glad.package}/glad.bc'
+	@${CC} ${FLAGS} -emit-llvm -c ${glad.trace}/glad.ll \
+		-o ${glad.trace}/glad.bc
 
 glad.compile: glad.create.bc
 
 glad.clean:
-	@rm -rf ${wildcard ${trace}/glad.*}
+	@rm -rf ${wildcard ${glad.trace}/glad.*}
 
 glad.build: glad.clean glad.compile
